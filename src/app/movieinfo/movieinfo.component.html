@@ -1,0 +1,102 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div class="container justify-content-center">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <!--To loop-->
+            <div class="carousel-inner" *ngFor="let link of videolinks">
+                <!-- Single item -->
+                <div class="carousel-item active">
+                    <video controls class="img-fluid" [muted]="'muted'" poster="http://192.168.1.137:8080/stream/picture/movie/{{movie?.movieID}}.jpg">
+                        <source src="{{link}}" type="video/mp4">
+                        <source src="{{link}}" type="video/ogg">
+                    </video>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">{{movie?.movieID}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td scope="row">Title</td>
+                            <td>{{movie?.titel}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Released</td>
+                            <td>{{movie?.released}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Length</td>
+                            <td>{{movie?.length}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Director</td>
+                            <td>{{movie?.director}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Maker</td>
+                            <td>{{movie?.maker}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Label</td>
+                            <td>{{movie?.label}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Rating</td>
+                            <td>{{movie?.rating}}/10</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Added</td>
+                            <td>{{movie?.added}}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Genres</td>
+                            <td>
+                                <!--to loop-->
+                                <a *ngFor="let genre of movie?.genres" class="btn btn-secondary">{{genre.genre}}</a>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">Comment</td>
+                            <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, in. Illo,
+                                laboriosam
+                                quo cumque quisquam a, accusamus consectetur obcaecati odio similique suscipit quos
+                                eligendi quaerat vitae sed nobis, sit eius.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--to loop-->
+
+            <a *ngFor="let actor of actorList" class="card" style="width: 200px; height:270px; cursor:pointer; text-decoration: none; color: black;" [routerLink]="['/actorinfo/'+actor.actorName]">
+                <img class="card-img-top" style="max-width:200px; max-height:200px ;"
+                    src="http://192.168.1.137:8080/stream/picture/actor/{{actor.actorName}}.jpg" />
+                <div class="card-body" style="overflow-y: auto;">
+                    <div class="card-title">
+                        {{actor?.actorName}} ({{getAge(actor.birthday,movie.released)}})
+                    </div>
+                </div>
+            </a>
+
+
+        </div>
+    </div>
+
+</div>
+
+<app-footer></app-footer>

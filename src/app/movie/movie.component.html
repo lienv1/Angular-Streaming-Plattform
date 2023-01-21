@@ -1,0 +1,116 @@
+<app-navbar></app-navbar>
+
+<br>
+
+
+<div class="container-left">
+
+    <div class="row justify-content-left align-items-left g-2" style="margin-left:5px;">
+        <div class="col-auto">
+            <table class="table">
+                <tr>
+                    <td>
+                        <h4 style="font-weight: bold;">Movie ID</h4>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control" type="search" placeholder="ID" aria-label="Search">
+                            <br>
+                            <button class="btn btn-primary" (click)="searchForID">Submit ID Search</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr>
+
+                        <h4 style="font-weight: bold;">Combination Search</h4>
+
+                        <div style="font-weight: bold;">Actor</div>
+
+                        <div *ngIf="hasActor()" class="overflow-auto" style="height: 100px;">
+                            <h6 *ngFor="let actor of getArrayOfString(getActor())" (click)="removeActor(actor)"><span
+                                    class="badge bg-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-x" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                    {{actor}}
+                                </span></h6>
+
+                        </div>
+                            <input #inputActor type="search" placeholder="Actor" (keyup.enter)="searchForActor(inputActor.value)" aria-label="Search">
+                            <br>
+                            <button class="btn btn-outline-success" (click)="searchForActor(inputActor.value)" >Search for Actor</button>
+                        <div class="overflow-auto" style="height: 100px;">
+                            <!--too loop-->
+                            <div *ngFor="let actor of listOfActors" (click)="addActor(actor.actorName)">{{actor.actorName}}</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr>
+                        <div style="font-weight: bold;">Genre</div>
+                        <div *ngIf="hasGenre()" class="overflow-auto" style="height: 100px;">
+
+                            <!--To loop-->
+                            <h6 *ngFor="let genre of getArrayOfString(getGenre())" (click)="removeGenre(genre)">
+                                <div class="badge bg-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-x" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                    {{genre}}
+                                </div>
+                            </h6>
+
+                        </div>
+
+                        <input #inputGenre class="form-control" type="search" placeholder="Genre" (keyup.enter)="searchForGenre(inputGenre.value)" aria-label="Search">
+                        <br>
+                        <button class="btn btn-outline-success" (click)="searchForGenre(inputGenre.value)">Search for
+                            Genre</button>
+
+                        <div class="overflow-auto" style="height: 100px;">
+                            <!--To loop-->
+                            <div *ngFor="let genre of listOfGenre" (click)="addGenre(genre)">{{genre}}</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-primary" (click)="submitSearch()">Submit Search</button>
+        </div>
+
+
+        <!--Movie list-->
+        <div class="col-8">
+            <div class="row justify-content-center align-items-center g-2">
+
+                <!--list of cards, to loop-->
+                <a *ngFor="let movie of listOfMovies" class="card"
+                    style="width: 250px; height:400px; cursor:pointer; text-decoration: none; color: black;"
+                    [routerLink]="['/movieinfo/']+movie.movieID">
+                    <img class="card-img-top"
+                        src="http://192.168.1.137:8080/stream/picture/movie/{{movie.movieID}}.jpg" />
+                    <div class="card-body" style="overflow-y: auto;">
+                        <div class="card-title" style="font-weight: bold;">
+                            {{movie.movieID}}
+                        </div>
+                        <hr>
+                        <span class="card-subtitle" style="font-style:italic;">{{movie.titel}}</span>
+
+                        <!-- <div class="card-text">
+                        </div>-->
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<br>
+
+<app-footer></app-footer>
