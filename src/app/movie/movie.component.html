@@ -11,11 +11,11 @@
                 <tr>
                     <td>
                         <h4 style="font-weight: bold;">Movie ID</h4>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control" type="search" placeholder="ID" aria-label="Search">
-                            <br>
-                            <button class="btn btn-primary" (click)="searchForID">Submit ID Search</button>
-                        </form>
+
+                        <input #inputID class="form-control" type="search" (keyup.enter)="searchForID(inputID.value);scroll(movieList)" placeholder="ID" aria-label="Search">
+                        <br>
+                        <button class="btn btn-primary" (click)="searchForID(inputID.value);scroll(movieList)">Submit ID Search</button> 
+
                     </td>
                 </tr>
                 <tr>
@@ -38,12 +38,16 @@
                                 </span></h6>
 
                         </div>
-                            <input #inputActor type="search" placeholder="Actor" (keyup.enter)="searchForActor(inputActor.value)" aria-label="Search">
-                            <br>
-                            <button class="btn btn-outline-success" (click)="searchForActor(inputActor.value)" >Search for Actor</button>
+                        <input #inputActor type="search" placeholder="Actor"
+                            (keyup.enter)="searchForActor(inputActor.value)" aria-label="Search">
+                        <br>
+                        <br>
+                        <button class="btn btn-outline-success" (click)="searchForActor(inputActor.value)">Search for
+                            Actor</button>
                         <div class="overflow-auto" style="height: 100px;">
                             <!--too loop-->
-                            <div *ngFor="let actor of listOfActors" (click)="addActor(actor.actorName)">{{actor.actorName}}</div>
+                            <div *ngFor="let actor of listOfActors" (click)="addActor(actor.actorName)">
+                                {{actor.actorName}}</div>
                         </div>
                     </td>
                 </tr>
@@ -67,7 +71,8 @@
 
                         </div>
 
-                        <input #inputGenre class="form-control" type="search" placeholder="Genre" (keyup.enter)="searchForGenre(inputGenre.value)" aria-label="Search">
+                        <input #inputGenre class="form-control" type="search" placeholder="Genre"
+                            (keyup.enter)="searchForGenre(inputGenre.value)" aria-label="Search">
                         <br>
                         <button class="btn btn-outline-success" (click)="searchForGenre(inputGenre.value)">Search for
                             Genre</button>
@@ -79,12 +84,12 @@
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-primary" (click)="submitSearch()">Submit Search</button>
+            <button class="btn btn-primary" (click)="submitSearch()" (click)="scroll(movieList)">Submit Search</button>
         </div>
 
 
         <!--Movie list-->
-        <div class="col-8">
+        <div #movieList class="col-8">
             <div class="row justify-content-center align-items-center g-2">
 
                 <!--list of cards, to loop-->
@@ -92,7 +97,8 @@
                     style="width: 250px; height:400px; cursor:pointer; text-decoration: none; color: black;"
                     [routerLink]="['/movieinfo/']+movie.movieID">
                     <img class="card-img-top"
-                        src="http://192.168.1.137:8080/stream/picture/movie/{{movie.movieID}}.jpg" />
+                        src="http://192.168.1.137:8080/stream/picture/movie/{{movie.movieID}}.jpg" 
+                        />
                     <div class="card-body" style="overflow-y: auto;">
                         <div class="card-title" style="font-weight: bold;">
                             {{movie.movieID}}

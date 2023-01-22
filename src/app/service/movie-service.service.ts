@@ -22,6 +22,10 @@ export class MovieServiceService {
     return this.http.get<Movie>(`${this.apiBaseUrl}/movie/id/${id}`)
   }
 
+  public getMovieByIDLike(id:string) : Observable<Movie>{
+    return this.http.get<Movie>(`${this.apiBaseUrl}/movie/search/id/${id}`)
+  }
+
   public getAllMoviesWithGenreAndActor(genres: String, actors: String): Observable<Movie[]> {
     return this.http.get<Movie[]>(`${this.apiBaseUrl}/movie/filter?actor=${actors}&genre=${genres}`)
   }

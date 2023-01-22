@@ -77,6 +77,9 @@ export class MovieinfoComponent implements OnInit {
   }
 
   public getAge(actorBirthday: Date, movieReleased: Date): string {
+    if (actorBirthday == null){
+      return "";
+    }
     var d1 = new Date(actorBirthday.toString())
     var d2 = new Date(movieReleased.toString())
     var timeDiff = Math.abs(d2.getTime() - new Date(d1).getTime());

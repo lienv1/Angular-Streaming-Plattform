@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Actor } from '../model/Actor';
 import { Movie } from '../model/Movie';
@@ -13,6 +14,8 @@ import { MovieServiceService } from '../service/movie-service.service';
 })
 export class MovieComponent implements OnInit {
 
+  @ViewChild('movieList', { static: true }) movieListEl !: HTMLElement;
+
   listOfMovies: Movie[] = [];
   page: number = 1;
   pageSize: number = 1;
@@ -20,27 +23,43 @@ export class MovieComponent implements OnInit {
   listOfGenre: string[] = []
   listOfActors: Actor[] = []
 
-  constructor(public route: ActivatedRoute, public router: Router, private movieService: MovieServiceService, private actorService: ActorServiceService) { }
+  constructor(private titleService: Title, public route: ActivatedRoute, public router: Router, private movieService: MovieServiceService, private actorService: ActorServiceService) { }
 
   ngOnInit(): void {
-    this.get50RecentMovies();
+    var title = "Movie | Recent";
+    var actors = this.getActor();
+    var genres = this.getGenre();
+    if ((actors == null || actors == "") && (genres == null || genres == "")) {
+      this.get50RecentMovies();
+    }
+    else {
+      this.submitSearch();
+    }
+    this.titleService.setTitle(title)
   }
 
-  public searchForID() {
-
+  public searchForID(id: string) {
+    this.movieService.getAllMoviesWithNamesLike(id).subscribe(
+      (response: Movie[]) => {
+        this.listOfMovies = response
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    )
   }
 
   public submitSearch() {
     var actors = this.getActor();
     var genres = this.getGenre();
 
-    if (actors.length > 0 && genres.length > 0) {
+    if ((actors != null && actors != "") && (genres != null && genres != "")) {
       this.getAllMoviesWithGenreAndActor(genres, actors)
     }
-    else if (actors.length > 0) {
+    else if (actors != null && actors != "") {
       this.getAllMoviesWithActor(actors);
     }
-    else if (genres.length > 0) {
+    else if (genres != null && genres != "") {
       this.getAllMoviesWithGenre(genres);
     }
     else {
@@ -87,7 +106,7 @@ export class MovieComponent implements OnInit {
   }
 
   public getActor(): String {
-    var paramTest: String = "empty";
+    var paramTest: String = "";
     this.route.queryParams.subscribe(
       params => {
         const param = params['Actor'];
@@ -98,7 +117,7 @@ export class MovieComponent implements OnInit {
   }
 
   public getGenre(): String {
-    var paramTest: String = "empty";
+    var paramTest: String = "empy";
     this.route.queryParams.subscribe(
       params => {
         const param = params['Genre'];
@@ -172,6 +191,10 @@ export class MovieComponent implements OnInit {
   public hasActor(): Boolean {
     return this.getActor() != null;
   }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
   //Above are functions that doesn't affect server
 
   //Below are functions that communicate with the server
@@ -190,6 +213,7 @@ export class MovieComponent implements OnInit {
     this.movieService.getAllMoviesWithGenreAndActor(genre, actor).subscribe(
       (response: Movie[]) => {
         this.listOfMovies = response;
+        this.titleService.setTitle("Movie | " + actor + " | " + genre)
       },
       (error: HttpErrorResponse) => {
         alert(error);
@@ -200,6 +224,7 @@ export class MovieComponent implements OnInit {
     this.movieService.getAllMoviesWithGenres(genre).subscribe(
       (response: Movie[]) => {
         this.listOfMovies = response;
+        this.titleService.setTitle("Movie | " + genre)
       },
       (error: HttpErrorResponse) => {
         alert(error);
@@ -210,6 +235,7 @@ export class MovieComponent implements OnInit {
     this.movieService.getAllMoviesWithActors(actor).subscribe(
       (response: Movie[]) => {
         this.listOfMovies = response;
+        this.titleService.setTitle("Movie | " + actor)
       },
       (error: HttpErrorResponse) => {
         alert(error);
