@@ -46,8 +46,7 @@ export class MovieServiceService {
     return this.http.get<string[]>(`${this.apiBaseUrl}/movie/search/genre/${genre}`)
   }
 
-  //Files section
-
+  //Files streaming section
   public getAllStreamLinks(id: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiBaseUrl}/movie/files/${id}`)
   }
@@ -59,7 +58,7 @@ export class MovieServiceService {
   public getMovieImageFile(studio: string, id: string): Observable<string> {
     return this.http.get<string>(`${this.apiBaseUrl}/stream/picture/movie/${id}.jpg`)
   }
-  //Files section ends
+  //File streaming section ends
 
 
 }

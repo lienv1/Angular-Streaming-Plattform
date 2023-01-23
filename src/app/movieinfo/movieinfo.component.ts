@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Actor } from '../model/Actor';
 import { Movie } from '../model/Movie';
 import { ActorServiceService } from '../service/actor-service.service';
@@ -23,6 +24,8 @@ export class MovieinfoComponent implements OnInit {
   public videolinks: string[] = []
 
   public actorList: Actor[] = []
+
+  public apiBaseUrl: string = environment.apiBaseUrl 
 
   ngOnInit(): void {
     this.titleService.setTitle("Moviepage");

@@ -99,7 +99,7 @@
                     style="width: 250px; height:400px; cursor:pointer; text-decoration: none; color: black;"
                     [routerLink]="['/movieinfo/']+movie.movieID">
                     <img class="card-img-top"
-                        src="http://192.168.1.137:8080/stream/picture/movie/{{movie.movieID}}.jpg" />
+                        src="{{apiBaseUrl}}/stream/picture/movie/{{movie.movieID}}.jpg" />
                     <div class="card-body" style="overflow-y: auto;">
                         <div class="card-title" style="font-weight: bold;">
                             {{movie.movieID}}

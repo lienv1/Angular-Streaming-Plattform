@@ -12,7 +12,7 @@
             <div class="carousel-inner" *ngFor="let link of videolinks">
                 <!-- Single item -->
                 <div class="carousel-item active">
-                    <video controls class="img-fluid" [muted]="'muted'" poster="http://192.168.1.137:8080/stream/picture/movie/{{movie?.movieID}}.jpg">
+                    <video controls class="img-fluid" [muted]="'muted'" poster="{{apiBaseUrl}}/stream/picture/movie/{{movie?.movieID}}.jpg">
                         <source src="{{link}}" type="video/mp4">
                         <source src="{{link}}" type="video/ogg">
                         <source src="{{link}}" type="video/webm">
@@ -83,7 +83,7 @@
                     <!--to loop-->
                     <a *ngFor="let actor of actorList" class="card" style="width: 200px; height:270px; cursor:pointer; text-decoration: none; color: black;" [routerLink]="['/actorinfo/'+actor.actorName]">
                         <img class="card-img-top" style="max-width:200px; max-height:200px ;"
-                            src="http://192.168.1.137:8080/stream/picture/actor/{{actor.actorName}}.jpg"
+                            src="{{apiBaseUrl}}/stream/picture/actor/{{actor.actorName}}.jpg"
                             />
                         <div class="card-body" style="overflow-y: auto;">
                             <div class="card-title">

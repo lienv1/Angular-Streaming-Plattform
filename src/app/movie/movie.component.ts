@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Actor } from '../model/Actor';
 import { Movie } from '../model/Movie';
 import { ActorServiceService } from '../service/actor-service.service';
@@ -22,6 +23,8 @@ export class MovieComponent implements OnInit {
 
   listOfGenre: string[] = []
   listOfActors: Actor[] = []
+
+  public apiBaseUrl: string = environment.apiBaseUrl
 
   constructor(private titleService: Title, public route: ActivatedRoute, public router: Router, private movieService: MovieServiceService, private actorService: ActorServiceService) { }
 

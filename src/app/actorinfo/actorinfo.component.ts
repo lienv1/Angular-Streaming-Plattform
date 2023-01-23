@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Actor } from '../model/Actor';
 import { ActorServiceService } from '../service/actor-service.service';
 
@@ -15,6 +16,7 @@ export class ActorinfoComponent implements OnInit {
   constructor(private titleService: Title, private actorService: ActorServiceService, private route: ActivatedRoute) { }
 
   public actor: Actor | undefined
+  public apiBaseUrl: string = environment.apiBaseUrl
 
   ngOnInit(): void {
     this.titleService.setTitle("Actor");
@@ -23,17 +25,17 @@ export class ActorinfoComponent implements OnInit {
 
   public getActorInfo() {
     var nameFromURL = this.getNameFromURL()
-    if (nameFromURL == null){
+    if (nameFromURL == null) {
       alert("No name")
       return
     }
-      
+
     this.actorService.getActorInfo(nameFromURL).subscribe(
-      (repsonse:Actor) => {
+      (repsonse: Actor) => {
         this.actor = repsonse;
         this.titleService.setTitle(nameFromURL + " Bio")
       },
-      (error:HttpErrorResponse) => {
+      (error: HttpErrorResponse) => {
         alert(error.message)
       }
     )
@@ -44,7 +46,7 @@ export class ActorinfoComponent implements OnInit {
     if (id == "") {
       return "";
     }
-    return id+"";
+    return id + "";
   }
 
 }
