@@ -26,7 +26,6 @@ export class MovieinfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Moviepage");
-
   }
 
   ngAfterViewInit(): void {
@@ -44,6 +43,7 @@ export class MovieinfoComponent implements OnInit {
         this.movie = response;
         this.getVideolinks();
         this.getActors(this.movie);
+        this.titleService.setTitle(this.id);
       },
       (error: HttpErrorResponse) => {
         alert(error.message)

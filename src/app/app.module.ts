@@ -15,6 +15,7 @@ import { ActorinfoComponent } from './actorinfo/actorinfo.component';
 import { MovieServiceService } from './service/movie-service.service';
 import { ActorServiceService } from './service/actor-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [MovieServiceService,ActorServiceService],
   bootstrap: [AppComponent]

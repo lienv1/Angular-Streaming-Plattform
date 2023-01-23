@@ -7,6 +7,7 @@ import { Movie } from '../model/Movie';
 import { ActorServiceService } from '../service/actor-service.service';
 import { MovieServiceService } from '../service/movie-service.service';
 
+
 @Component({
   selector: 'app-movie',
   templateUrl: './movie.component.html',
@@ -18,7 +19,6 @@ export class MovieComponent implements OnInit {
 
   listOfMovies: Movie[] = [];
   page: number = 1;
-  pageSize: number = 1;
 
   listOfGenre: string[] = []
   listOfActors: Actor[] = []
@@ -35,6 +35,7 @@ export class MovieComponent implements OnInit {
     else {
       this.submitSearch();
     }
+    this.getPageParam();
     this.titleService.setTitle(title)
   }
 
@@ -103,6 +104,24 @@ export class MovieComponent implements OnInit {
       }
     })
     return list;
+  }
+
+  //Pagination
+  public getPageParam(){
+    this.route.queryParams.subscribe(
+      params => {
+        const param = params['page'];
+        var result = Number.parseInt(param);
+        this.page = result;
+      }
+    )
+  }
+
+  public setPageParam(){
+    this.router.navigate([],{
+      queryParams: {page:this.page},
+      queryParamsHandling: 'merge'
+    })
   }
 
   public getActor(): String {

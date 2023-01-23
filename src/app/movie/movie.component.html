@@ -12,12 +12,15 @@
                     <td>
                         <h4 style="font-weight: bold;">Movie ID</h4>
 
-                        <input #inputID class="form-control" type="search" (keyup.enter)="searchForID(inputID.value);scroll(movieList)" placeholder="ID" aria-label="Search">
+                        <input #inputID type="search" (keyup.enter)="searchForID(inputID.value);scroll(movieList)"
+                            placeholder="ID" aria-label="Search">
                         <br>
-                        <button class="btn btn-primary" (click)="searchForID(inputID.value);scroll(movieList)">Submit ID Search</button> 
+                        <br>
 
                     </td>
                 </tr>
+                <button type="button" class="btn btn-primary"
+                    (click)="searchForID(inputID.value);scroll(movieList)">Submit ID Search</button>
                 <tr>
                     <td>
                         <hr>
@@ -40,10 +43,7 @@
                         </div>
                         <input #inputActor type="search" placeholder="Actor"
                             (keyup.enter)="searchForActor(inputActor.value)" aria-label="Search">
-                        <br>
-                        <br>
-                        <button class="btn btn-outline-success" (click)="searchForActor(inputActor.value)">Search for
-                            Actor</button>
+
                         <div class="overflow-auto" style="height: 100px;">
                             <!--too loop-->
                             <div *ngFor="let actor of listOfActors" (click)="addActor(actor.actorName)">
@@ -51,6 +51,9 @@
                         </div>
                     </td>
                 </tr>
+                <br>
+                <button class="btn btn-secondary" (click)="searchForActor(inputActor.value)">Search for
+                    Actor</button>
                 <tr>
                     <td>
                         <hr>
@@ -68,21 +71,18 @@
                                     {{genre}}
                                 </div>
                             </h6>
-
                         </div>
-
-                        <input #inputGenre class="form-control" type="search" placeholder="Genre"
+                        <input #inputGenre type="search" placeholder="Genre"
                             (keyup.enter)="searchForGenre(inputGenre.value)" aria-label="Search">
-                        <br>
-                        <button class="btn btn-outline-success" (click)="searchForGenre(inputGenre.value)">Search for
-                            Genre</button>
-
                         <div class="overflow-auto" style="height: 100px;">
                             <!--To loop-->
                             <div *ngFor="let genre of listOfGenre" (click)="addGenre(genre)">{{genre}}</div>
                         </div>
                     </td>
                 </tr>
+                <br>
+                <button class="btn btn-secondary" (click)="searchForGenre(inputGenre.value)">Search for
+                    Genre</button>
             </table>
             <button class="btn btn-primary" (click)="submitSearch()" (click)="scroll(movieList)">Submit Search</button>
         </div>
@@ -92,13 +92,14 @@
         <div #movieList class="col-8">
             <div class="row justify-content-center align-items-center g-2">
 
+                <h3 *ngIf="getActor() != null || getGenre() != null">Search result: {{listOfMovies.length}}</h3>
+
                 <!--list of cards, to loop-->
-                <a *ngFor="let movie of listOfMovies" class="card"
+                <a *ngFor="let movie of listOfMovies | paginate: { itemsPerPage: 10, currentPage: page }" class="card"
                     style="width: 250px; height:400px; cursor:pointer; text-decoration: none; color: black;"
                     [routerLink]="['/movieinfo/']+movie.movieID">
                     <img class="card-img-top"
-                        src="http://192.168.1.137:8080/stream/picture/movie/{{movie.movieID}}.jpg" 
-                        />
+                        src="http://192.168.1.137:8080/stream/picture/movie/{{movie.movieID}}.jpg" />
                     <div class="card-body" style="overflow-y: auto;">
                         <div class="card-title" style="font-weight: bold;">
                             {{movie.movieID}}
@@ -110,11 +111,14 @@
                         </div>-->
                     </div>
                 </a>
-
             </div>
         </div>
-
     </div>
+    <br>
+</div>
+
+<div class="container-md">
+    <pagination-controls (pageChange)="page = $event" (click)="setPageParam()"></pagination-controls>
 </div>
 
 <br>
