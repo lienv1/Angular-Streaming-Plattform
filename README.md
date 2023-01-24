@@ -39,7 +39,7 @@ To deploy this application on a docker container, run the following commands:
 > docker run -rm -it -p 4200:4200 
 
 To save the application as an docker image, run:
-> docker save --output
+> docker save --output my-streaming-plattform-app.tar my-streaming-plattform-app
 
 ## Build
 
